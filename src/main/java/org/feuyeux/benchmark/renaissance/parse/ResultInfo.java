@@ -10,4 +10,6 @@ import java.util.List;
 public class ResultInfo {
     private String targetName;
     private List<BenchInfo> benchInfoList;
+    private long heapUsage;
+    private long nonHeapUsage;
 }

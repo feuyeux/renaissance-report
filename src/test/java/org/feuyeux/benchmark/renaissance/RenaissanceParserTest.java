@@ -21,13 +21,14 @@ public class RenaissanceParserTest {
         String path = resourceDirectory.toAbsolutePath().toString();
         JsonParser parser = new JsonParser();
         ArrayList<String> benchNames = Lists.newArrayList(
-                "openjdk-11");
-        benchNames.stream().map(
-                targetName -> RenaissanceParser.parse(parser, path, targetName)
-        ).filter(Objects::nonNull).forEach(r -> {
-            List<BenchInfo> benchInfoList = r.getBenchInfoList();
-            log.info("{}", r.getTargetName());
-            benchInfoList.forEach(b -> log.info("{}\t{}", b.getBenchName(), b.getBenchValue()));
-        });
+                "dragonwell-G1", "dragonwell-G1ElasticHeap", "dragonwell-CMS", "dragonwell-11", "openjdk-11");
+        benchNames.stream()
+                .map(targetName -> RenaissanceParser.parse(parser, path, targetName))
+                .filter(Objects::nonNull)
+                .forEach(r -> {
+                    List<BenchInfo> benchInfoList = r.getBenchInfoList();
+                    log.info("{}\t{}\t{}", r.getTargetName(), r.getHeapUsage(), r.getNonHeapUsage());
+                    benchInfoList.forEach(b -> log.info("{}\t{}", b.getBenchName(), b.getBenchValue()));
+                });
     }
 }
